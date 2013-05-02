@@ -140,8 +140,9 @@ module SerializationHelper
     end
 
     def self.convert_timestamp(value)
-      unless value.nil?
-        if (value.respond_to?(:length) && value.to_s.length > 23) || value.to_s.length > 23
+      unless value.nil? || !value.respond_to?(:length)
+        value = value.to_s
+        if value.to_s.length > 23 || value.length > 23
           lengthToCut = 23 - value.length - 1
           return value[0..lengthToCut]
         end
